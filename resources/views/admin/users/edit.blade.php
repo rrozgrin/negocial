@@ -21,6 +21,10 @@
                     <input type="text" class="form-control" name="cpj_cobranca" value="{{ $user->cpj_cobranca }}">
                 </div>
                 <div class="form-group">
+                    <label for="cpj">e-mail</label>
+                    <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+                </div>
+                <div class="form-group">
                     <label for="role">Função</label>
                     <select class="form-control" name="role_id">
                         @foreach ($roles as $role)

@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+
 class UserController extends Controller
 {
     /**
@@ -53,6 +54,7 @@ class UserController extends Controller
         $user = new User;
         $user->name_user = $request->name;
         $user->cpj_cobranca = $request->cpj;
+        $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->role_id = $request->role;
         $user->status = $status;

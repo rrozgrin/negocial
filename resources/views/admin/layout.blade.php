@@ -12,7 +12,7 @@
 
     {{-- chart --}}
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="{{ URL::asset('/js/grafics.js') }}"></script>
+    
 
 </head>
 <header>
@@ -23,7 +23,7 @@
 
 <body style="margin-top: 70px">
     <main role="main">
-        <div class="container">
+        <div class="container col-md-11">
             @hasSection('content')
                 @yield('content')
             @else

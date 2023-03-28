@@ -18,18 +18,30 @@
         <div class="collapse navbar-collapse ml-5" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('rel.def')}}">Defasagem<span class="sr-only"></span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('rel.mov')}}">Movimentações<span class="sr-only"></span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('rel.lig')}}">Ligações<span class="sr-only"></span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('admin.users.index')}}">Admin</a>
+                    <a class="nav-link {{ Request::is('relatorios/def') ? 'active' :'' }}" href="{{route('rel.def')}}">Defasagem<span class="sr-only"></span></a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('relatorios/mov') ? 'active' :'' }}" href="{{route('rel.mov')}}">Movimentações<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('relatorios/lig') ? 'active' :'' }}" href="{{route('rel.lig')}}">Ligações<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('admin/users') ? 'active' :'' }}" href="{{route('admin.users.index')}}">Admin</a>
+                </li>
+                
+            </ul>
+
+        </div>
+        <div class="my-2 my-lg-0">
+            <ul class="navbar-nav mr-auto">
+                <li class="nac-item">
+                    <a class="nav-link" onclick="document.querySelector('form.logout').submit();">Sair</a>
+                    <form action="{{route('logout')}}" class="logout" method="POST" style="display: none">
+                        @csrf
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>

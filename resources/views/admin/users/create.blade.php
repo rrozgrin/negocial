@@ -16,6 +16,10 @@
                     <input type="text" class="form-control" name="cpj">
                 </div>
                 <div class="form-group">
+                    <label for="cap">e-mail</label>
+                    <input type="text" class="form-control" name="email">
+                </div>
+                <div class="form-group">
                     <label for="role">Função</label>
                     <select  class="form-control"  name="role">
                         @foreach ($roles as $role)

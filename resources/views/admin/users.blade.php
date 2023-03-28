@@ -21,6 +21,7 @@
                     <th style="width: 10%">Id</th>
                     <th style="width: 26%" class="text-left">Nome</th>
                     <th style="width: 14%">CPJ-Cobrança</th>
+                    <th style="width: 14%">e-mail</th>
                     <th style="width: 20%">Função</th>
                     <th style="width: 10%">Editar</th>
                 </tr>
@@ -31,6 +32,7 @@
                     <td>{{$user->id}}</td>
                     <td class="text-left">{{$user->name_user}}</td>
                     <td>{{$user->cpj_cobranca}}</td>
+                    <td>{{$user->email}}</td>                    
                     <td>{{$user->role->name_role}}</td>
                     <td><a class="btn btn-warning text-primary" href="{{ route('admin.users.edit', $user->id) }}">Editar</td>
                 </tr>

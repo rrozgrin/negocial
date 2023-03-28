@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DefasagemController;
 use App\Http\Controllers\MovimentacoesController;
+use App\Http\Controllers\LigacoesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,22 +18,27 @@ use App\Http\Controllers\MovimentacoesController;
 |
 */
 
-Route::get('/', function () {
-    return redirect(route('rel.mov'));
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', function () {
+        return redirect(route('rel.mov'));
+    });
+
+
+
+    Route::prefix('/relatorios')->name('rel.')->group(function () {
+        Route::get('/def', [DefasagemController::class, 'index'])->name('def');
+        Route::get('/lig', [LigacoesController::class, 'index'])->name('lig');
+        Route::post('/lig', [LigacoesController::class, 'index'])->name('lig');
+        Route::get('/mov', [MovimentacoesController::class, 'index'])->name('mov');
+        Route::post('/mov', [MovimentacoesController::class, 'index'])->name('mov');
+        Route::get('/mov/detalhado', [MovimentacoesController::class, 'detalhado'])->name('detalhado');
+        Route::post('/mov/detalhado', [MovimentacoesController::class, 'detalhado'])->name('detalhado');
+    });
 });
 
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class);
-});
-
-Route::prefix('/relatorios')->name('rel.')->group(function () {
-    Route::get('/def', [DefasagemController::class, 'index'])->name('def');
-    Route::get('/lig', function(){ return view('relatorios.ligacoes.index');})->name('lig');
-    Route::get('/mov', [MovimentacoesController::class, 'index'])->name('mov');
-    Route::post('/movdata', [MovimentacoesController::class, 'indexdata'])->name('movdata');
-    Route::get('/mov/individual', [MovimentacoesController::class, 'individual'])->name('individual');
-    Route::post('/mov/individualselecionado', [MovimentacoesController::class, 'individualselecionado'])->name('individualselecionado');
-    
 });
 
 Auth::routes();
