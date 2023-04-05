@@ -12,6 +12,16 @@ class DefasagemController extends Controller
     {
         $users = User::orderBy('name_user', 'ASC')->get();
 
+        $carteiras = DB::table('clientes')
+            ->select('nome_cliente')
+            ->distinct()
+            ->get();
+
+        if (empty($_POST)) {
+            $carteira = $carteiras[0]->nome_cliente;
+        } else {
+            $carteira = $_POST['carteira'];
+        }
 
 
         $acionados = DB::select(
@@ -19,7 +29,7 @@ class DefasagemController extends Controller
             FROM clientes c
             INNER JOIN negociadors n
             ON c.negociador = n.id
-            WHERE c.mci IN (SELECT a.mci FROM acionamentos a)
+            WHERE c.mci IN (SELECT a.mci FROM acionamentos a) AND c.nome_cliente = '" . $carteira . "'
             GROUP BY 1
             ORDER BY 1 ASC"
         );
@@ -28,7 +38,7 @@ class DefasagemController extends Controller
             FROM clientes c
             INNER JOIN negociadors n
             ON c.negociador = n.id
-            WHERE c.mci NOT IN (SELECT a.mci FROM acionamentos a)
+            WHERE c.mci NOT IN (SELECT a.mci FROM acionamentos a) AND c.nome_cliente = '" . $carteira . "'
             GROUP BY 1
             ORDER BY 1 ASC"
         );
@@ -36,8 +46,8 @@ class DefasagemController extends Controller
 
         foreach ($acionados as $key => $value) {
             foreach ($naoacionados as $key => $value_n) {
-                if($value->negociador_ == $value_n->negociador){
-                    $acionadosData[++$key] = ['negociador'=>$value->negociador_, 'acionados'=>$value->acionado, 'defasagem'=>$value_n->naoacionado];
+                if ($value->negociador_ == $value_n->negociador) {
+                    $acionadosData[++$key] = ['negociador' => $value->negociador_, 'acionados' => $value->acionado, 'defasagem' => $value_n->naoacionado];
                 }
             }
         }
@@ -46,12 +56,12 @@ class DefasagemController extends Controller
 
         foreach ($acionados as $key => $value) {
             foreach ($naoacionados as $key => $value_n) {
-                if($value->negociador_ == $value_n->negociador){
-                    $acionadosGraf[++$key] = [$value->negociador_,$value->acionado / (($value->acionado + $value_n->naoacionado))*100];
+                if ($value->negociador_ == $value_n->negociador) {
+                    $acionadosGraf[++$key] = [$value->negociador_, $value->acionado / (($value->acionado + $value_n->naoacionado)) * 100];
                 }
             }
         }
 
-            return view('relatorios.defasagem.index', compact('users', 'acionados', 'naoacionados', 'acionadosData'))->with('acionadosGraf',json_encode($acionadosGraf));
+        return view('relatorios.defasagem.index', compact('users', 'acionados', 'naoacionados', 'acionadosData','carteiras'))->with('acionadosGraf', json_encode($acionadosGraf));
     }
 }

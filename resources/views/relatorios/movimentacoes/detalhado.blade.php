@@ -1,5 +1,5 @@
 @extends('admin.layout')
-{{-- {{dd($pornegociadorData);}} --}}
+{{-- {{dd($ligacoes);}} --}}
 
 @section('content')
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

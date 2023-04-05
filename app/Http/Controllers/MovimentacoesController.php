@@ -39,13 +39,18 @@ class MovimentacoesController extends Controller
             ->get();
 
         $movi[] = ['ocorrencia', 'total'];
+        $somaTotal = 0;
 
         foreach ($mov as $key => $value) {
-            $movi[++$key] = [$value->ocorrencia, $value->total];
+            $movi[++$key] = [$value->ocorrencia, (int)$value->total];
+        }
+
+        for ($i = 1; $i < sizeof($movi); $i++) {
+            $somaTotal += $movi[$i][1];
         }
 
 
-        return view('relatorios.movimentacoes.index', compact('users', 'mov', 'data', 'dataArray'))
+        return view('relatorios.movimentacoes.index', compact('users', 'mov', 'data', 'dataArray', 'somaTotal'))
             ->with('movi', json_encode($movi));
     }
 
@@ -157,11 +162,8 @@ class MovimentacoesController extends Controller
         }
         //--dados gráfico acionamentos
 
-        return view('relatorios.movimentacoes.detalhado', compact('acionamentos','negociador', 'data', 'negociadorArray', 'dataArray'))
+        return view('relatorios.movimentacoes.detalhado', compact('acionamentos', 'negociador', 'data', 'negociadorArray', 'dataArray'))
             ->with('pornegociadorData', json_encode($pornegociadorData))
             ->with('ligacoes', json_encode($liga));
     }
-
-
-
 }

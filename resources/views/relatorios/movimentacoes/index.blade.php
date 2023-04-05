@@ -67,11 +67,11 @@
                 </form>
             </div>
 
-            <table class="table table-sm">
+            <table class="table table-sm text-center">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Acionamento</th>
-                        <th scope="col">Total</th>
+                        <th scope="col">OCORRÊNCIAS</th>
+                        <th scope="col">TOTAL</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,6 +82,10 @@
                             <td>{{ $mov->total }}</td>
                         </tr>
                     @endforeach
+                    <tr class="thead-dark">
+                            <th class="big" scope="row">TOTAL</th>
+                            <th class="big" scope="row">{{ $somaTotal }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

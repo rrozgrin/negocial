@@ -40,7 +40,7 @@
                         fontSize: 10,
                     }
                 },
-                
+
                 title: 'Percentual de MCI acionados de toda a base do negociador',
 
             };
@@ -73,6 +73,15 @@
             <div class="col d-flex justify-content-betwee">
                 <h4>Defasagem</h4>
             </div>
+        </div>
+        <div class="col-md-3">
+            <select class="form-control " name="negociador">
+                @foreach ($carteiras as $c)
+                    <option value="{{ $c->nome_cliente }}" {{ isset($carteira) && $carteira == $c->nome_cliente ? 'selected' : '' }}>
+                        {{ $c->nome_cliente }}
+                    </option>
+                @endforeach
+            </select>
         </div>
         <div class="row">
             <div class="card-body col-md-6">
