@@ -111,7 +111,7 @@
                 </table>
             </div>
             <div class="card-body col-md-6">
-                <div id="columnchart_values" style="padding-right: 100px; width: 900px; height: 400px;  "></div>
+                <div id="columnchart_values" style="padding-right: 100px; width: 700px; height: 400px;  "></div>
             </div>
         </div>
     </div>
