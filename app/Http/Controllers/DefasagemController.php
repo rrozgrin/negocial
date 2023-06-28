@@ -13,12 +13,15 @@ class DefasagemController extends Controller
         $users = User::orderBy('name_user', 'ASC')->get();
 
         $carteiras = DB::table('clientes')
-            ->select('nome_cliente')
+        ->join("empresas as e", function ($join) {
+            $join->on("e.id", "=", "empresa_id");
+        })
+            ->select('empresa_id', 'e.nome_empresa')
             ->distinct()
             ->get();
 
         if (empty($_POST)) {
-            $carteira = $carteiras[0]->nome_cliente;
+            $carteira = $carteiras[0]->empresa_id;
         } else {
             $carteira = $_POST['carteira'];
         }
@@ -29,7 +32,7 @@ class DefasagemController extends Controller
             FROM clientes c
             INNER JOIN negociadors n
             ON c.negociador = n.id
-            WHERE c.mci IN (SELECT a.mci FROM acionamentos a) AND c.nome_cliente = '" . $carteira . "'
+            WHERE c.mci IN (SELECT a.mci FROM acionamentos a) AND c.empresa_id = '" . $carteira . "'
             GROUP BY 1
             ORDER BY 1 ASC"
         );
@@ -38,7 +41,7 @@ class DefasagemController extends Controller
             FROM clientes c
             INNER JOIN negociadors n
             ON c.negociador = n.id
-            WHERE c.mci NOT IN (SELECT a.mci FROM acionamentos a) AND c.nome_cliente = '" . $carteira . "'
+            WHERE c.mci NOT IN (SELECT a.mci FROM acionamentos a) AND c.empresa_id = '" . $carteira . "'
             GROUP BY 1
             ORDER BY 1 ASC"
         );
@@ -62,6 +65,6 @@ class DefasagemController extends Controller
             }
         }
 
-        return view('relatorios.defasagem.index', compact('users', 'acionados', 'naoacionados', 'acionadosData','carteiras'))->with('acionadosGraf', json_encode($acionadosGraf));
+        return view('relatorios.defasagem.index', compact('users', 'acionados', 'naoacionados', 'acionadosData', 'carteiras'))->with('acionadosGraf', json_encode($acionadosGraf));
     }
 }

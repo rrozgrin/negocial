@@ -76,9 +76,11 @@
         </div>
         <div class="col-md-3">
             <select class="form-control " name="negociador">
+
+ 
                 @foreach ($carteiras as $c)
-                    <option value="{{ $c->nome_cliente }}" {{ isset($carteira) && $carteira == $c->nome_cliente ? 'selected' : '' }}>
-                        {{ $c->nome_cliente }}
+                    <option value="{{ $c->empresa_id }}" {{ isset($carteira) && $carteira == $c->empresa_id ? 'selected' : '' }}>
+                        {{ $c->nome_empresa }}
                     </option>
                 @endforeach
             </select>
