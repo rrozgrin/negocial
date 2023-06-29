@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DefasagemController;
 use App\Http\Controllers\MovimentacoesController;
 use App\Http\Controllers\LigacoesController;
+use App\Http\Controllers\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,6 @@ Route::group(['middleware' => ['auth']], function () {
         return redirect(route('rel.mov'));
     });
 
-
-
     Route::prefix('/relatorios')->name('rel.')->group(function () {
         Route::get('/def', [DefasagemController::class, 'index'])->name('def');
         Route::get('/lig', [LigacoesController::class, 'index'])->name('lig');
@@ -36,6 +35,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/mov/detalhado', [MovimentacoesController::class, 'detalhado'])->name('detalhado');
     });
 });
+
+Route::get('/clientes', [ClienteController::class, 'index']);
+Route::post('/import-clientes', [ClienteController::class, 'import']);
 
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class);

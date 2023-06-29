@@ -1,9 +1,9 @@
 @extends('admin.layout')
 
-{{-- {{dd($acionadosData[2]['acionados']);}} --}}
+{{-- {{dd($query);}} --}}
 @section('content')
     <script type="text/javascript">
-        var analytics = <?php echo $acionadosGraf; ?>
+        var analytics = <?php echo $query_json; ?>
 
         google.charts.load('current', {
             'packages': ['corechart']
@@ -77,9 +77,10 @@
         <div class="col-md-3">
             <select class="form-control " name="negociador">
 
- 
+
                 @foreach ($carteiras as $c)
-                    <option value="{{ $c->empresa_id }}" {{ isset($carteira) && $carteira == $c->empresa_id ? 'selected' : '' }}>
+                    <option value="{{ $c->empresa_id }}"
+                        {{ isset($carteira) && $carteira == $c->empresa_id ? 'selected' : '' }}>
                         {{ $c->nome_empresa }}
                     </option>
                 @endforeach
@@ -98,17 +99,15 @@
                     </thead>
                     <tbody>
 
-                        @php $count = sizeof($acionadosData) @endphp
-
-                        @for ($i = 1; $i < $count; $i++)
+                        @foreach ($query as $q)
                             <tr>
-                                <td>{{ $acionadosData[$i]['negociador'] }}</td>
-                                <td class="text-center">{{ $acionadosData[$i]['acionados'] }}</td>
-                                <td class="text-center">{{ $acionadosData[$i]['defasagem'] }}</td>
-                                <td class="text-center">
-                                    {{ $acionadosData[$i]['acionados'] + $acionadosData[$i]['defasagem'] }}</td>
+                                <td>{{ $q->id }}</td>
+                                <td class="text-center">{{ $q->acionados }}</td>
+                                <td class="text-center">{{ $q->naoAcionados }}</td>
+                                <td class="text-center">{{ $q->acionados + $q->naoAcionados }}</td>
                             </tr>
-                        @endfor
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>
