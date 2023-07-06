@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcionamentoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -7,6 +8,7 @@ use App\Http\Controllers\DefasagemController;
 use App\Http\Controllers\MovimentacoesController;
 use App\Http\Controllers\LigacoesController;
 use App\Http\Controllers\ClienteController;
+use App\Models\Acionamento;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/clientes', [ClienteController::class, 'index']);
 Route::post('/import-clientes', [ClienteController::class, 'import']);
+
+Route::get('/acionamentos', [AcionamentoController::class, 'index']);
+Route::post('/import-acionamentos', [AcionamentoController::class, 'import']);
 
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class);

@@ -42,7 +42,7 @@ class MovimentacoesController extends Controller
         $somaTotal = 0;
 
         foreach ($mov as $key => $value) {
-            $movi[++$key] = [$value->ocorrencia, (int)$value->total];
+            $movi[] = [$value->ocorrencia, (int)$value->total];
         }
 
         for ($i = 1; $i < sizeof($movi); $i++) {
@@ -61,9 +61,10 @@ class MovimentacoesController extends Controller
         if (empty($_POST)) {
             $data = DB::table('acionamentos')->max('data');
             $negociador = 2023;
+            $dataLigacoes = DB::table('ligacoes')->max('data');
             $ligacoes = DB::table("ligacoes AS l")
                 ->select("l.negociador AS negociador", "l.qtd_atv AS ligacoes")
-                ->where("l.data", "=", $data)
+                ->where("l.data", "=", $dataLigacoes)
                 ->orderBy('negociador', 'ASC')
                 ->get();
 
@@ -82,7 +83,9 @@ class MovimentacoesController extends Controller
                 ->orderBy('hora', 'ASC')
                 ->get();
         } else {
+
             $data = $_POST['data'];
+
             if ($_POST['negociador'] == 2023) {
                 $negociador = 2023;
                 $acionamentos =
@@ -99,12 +102,12 @@ class MovimentacoesController extends Controller
                     ->orderBy('hora', 'ASC')
                     ->get();
             } else {
-                $negociador = (int)$_POST['negociador'];
+                $negociador = $_POST['negociador'];
 
                 $acionamentos =
                     DB::table("acionamentos AS a")
                     ->join("negociadors AS n", function ($join) {
-                        $join->on("n.id", "=", "a.user_id");
+                        $join->on("n.id", "=", "a.id");
                     })
                     ->join("clientes AS c", function ($join) {
                         $join->on("a.mci", "=", "c.mci");
@@ -115,8 +118,10 @@ class MovimentacoesController extends Controller
                     ->orderBy('negociador', 'ASC')
                     ->orderBy('hora', 'ASC')
                     ->get();
+                dd($acionamentos);
             }
 
+            
             $ligacoes = DB::table("ligacoes AS l")
                 ->select("l.negociador AS negociador", "l.qtd_atv AS ligacoes")
                 ->where("l.data", "=", $data)
@@ -129,7 +134,7 @@ class MovimentacoesController extends Controller
         $liga[] = ['Negociadores', 'Total de ligações'];
 
         foreach ($ligacoes as $key => $value) {
-            $liga[++$key] = [$value->negociador, $value->ligacoes];
+            $liga[] = [$value->negociador, $value->ligacoes];
         }
         //--dados gráfico ligações
 
@@ -155,6 +160,7 @@ class MovimentacoesController extends Controller
             ->where("a.data", "=", $data)
             ->groupBy('n.nome')
             ->get();
+
 
         $pornegociadorData[] = ['Negociador', 'Acionamentos'];
         foreach ($pornegociador as $key => $value) {

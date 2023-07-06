@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-{{-- {{dd($query);}} --}}
+{{-- {{dd($query_json);}} --}}
 @section('content')
     <script type="text/javascript">
         var analytics = <?php echo $query_json; ?>
@@ -101,7 +101,7 @@
 
                         @foreach ($query as $q)
                             <tr>
-                                <td>{{ $q->id }}</td>
+                                <td>{{ $q->nome }}</td>
                                 <td class="text-center">{{ $q->acionados }}</td>
                                 <td class="text-center">{{ $q->naoAcionados }}</td>
                                 <td class="text-center">{{ $q->acionados + $q->naoAcionados }}</td>

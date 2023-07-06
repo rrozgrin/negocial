@@ -23,9 +23,9 @@ class LigacoesController extends Controller
 
 
         $data = DB::select("SELECT DISTINCT(`data`)
-            FROM ligacoes
-            WHERE MONTH(`data`) = (SELECT MAX(MONTH(`data`)) FROM ligacoes )
-    ");
+                                        FROM ligacoes
+                                        WHERE MONTH(`data`) = (SELECT MAX(MONTH(`data`)) FROM ligacoes )
+                                    ");
 
         return view('relatorios.ligacoes.index', compact('ligacoes', 'data', 'dia'));
     }
