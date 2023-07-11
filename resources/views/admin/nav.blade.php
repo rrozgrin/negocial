@@ -28,7 +28,7 @@
                     <a class="nav-link {{ Request::is('relatorios/lig') ? 'active' :'' }}" href="{{route('rel.lig')}}">Ligações<span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('admin/users') ? 'active' :'' }}" href="{{route('admin.users.index')}}">Admin</a>
+                    <a class="nav-link {{ Request::is('admin/admin') ? 'active' :'' }}" href="{{route('admin.admin')}}">Admin</a>
                 </li>
                 
             </ul>

@@ -1,8 +1,5 @@
-@extends('admin.layout')
-@section('content')
-
 <div class="card">
-    <div class="card-header py-3">
+    <div class="card-header bg-dark m-2 text-white py-3">
         Incluir novos acionamentos
     </div>
     <div class="card-body">
@@ -19,5 +16,3 @@
         </form>
     </div>
 </div>
-
-@endsection

@@ -8,7 +8,7 @@ use App\Http\Controllers\DefasagemController;
 use App\Http\Controllers\MovimentacoesController;
 use App\Http\Controllers\LigacoesController;
 use App\Http\Controllers\ClienteController;
-use App\Models\Acionamento;
+use App\Http\Controllers\ImportadoresController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,16 +38,17 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-Route::get('/clientes', [ClienteController::class, 'index']);
+
+Route::get('/importadores', [ImportadoresController::class, 'index'])->name('importadores');
 Route::post('/import-clientes', [ClienteController::class, 'import']);
-
-Route::get('/acionamentos', [AcionamentoController::class, 'index']);
 Route::post('/import-acionamentos', [AcionamentoController::class, 'import']);
-
-Route::get('/ligacoes', [LigacoesController::class, 'indexImport']);
 Route::post('/import-ligacoes', [LigacoesController::class, 'import']);
 
 Route::prefix('/admin')->name('admin.')->group(function () {
+    Route::get('admin', function () {
+        return view('admin.admin');
+    })->name('admin');
+
     Route::resource('users', UserController::class);
 });
 
