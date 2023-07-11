@@ -1,6 +1,4 @@
 @extends('admin.layout')
-{{-- {{dd($ligacoes);}} --}}
-
 @section('content')
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -18,8 +16,7 @@
                 title: 'QUANTIDADE DE ACIONAMENTOS DO DIA',
                 colors: ['0f4262'],
                 chartArea: {
-                    top: 20,
-                    left: 20,
+                    
                     width: '100%',
                     height: '70%'
                 },
@@ -31,7 +28,7 @@
                         fontSize: 10,
                     }
                 },
-                width: 600,
+                
 
             };
 
@@ -47,7 +44,7 @@
                 },
             ]);
 
-            
+
             var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
             chart.draw(view, options);
         }
@@ -67,8 +64,7 @@
                 title: 'QUANTIDADE DE LIGAÇÕES DO DIA',
                 colors: ['111e29'],
                 chartArea: {
-                    top: 20,
-                    left: 20,
+                    
                     width: '100%',
                     height: '70%'
                 },
@@ -80,7 +76,7 @@
                 backgroundColor: {
                     fill: 'transparent'
                 },
-                width: 600,
+                
             };
 
             var view = new google.visualization.DataView(data);
@@ -98,7 +94,9 @@
         }
     </script>
 
+
     <div class="card">
+
         <div class="card-header align-items-center py-3">
             <div class="col d-flex justify-content-betwee text-info">
                 <h4 class="titulo">Detelhamento dos Acionamentos</h4>

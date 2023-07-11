@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Imports\LigacaoImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LigacoesController extends Controller
 {
@@ -28,5 +30,16 @@ class LigacoesController extends Controller
                                     ");
 
         return view('relatorios.ligacoes.index', compact('ligacoes', 'data', 'dia'));
+    }
+
+    public function indexImport()
+    {
+        return view('admin.import.ligacoes-import');
+    }
+
+    public function import()
+    {
+        Excel::import(new LigacaoImport(), request()->file('file'));
+        return redirect(route('rel.mov'));
     }
 }

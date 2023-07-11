@@ -44,6 +44,9 @@ Route::post('/import-clientes', [ClienteController::class, 'import']);
 Route::get('/acionamentos', [AcionamentoController::class, 'index']);
 Route::post('/import-acionamentos', [AcionamentoController::class, 'import']);
 
+Route::get('/ligacoes', [LigacoesController::class, 'indexImport']);
+Route::post('/import-ligacoes', [LigacoesController::class, 'import']);
+
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class);
 });

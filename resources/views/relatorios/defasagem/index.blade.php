@@ -25,7 +25,8 @@
                 chartArea: {
                     top: 100,
                     left: 0,
-                    width: '90%'
+                    width: '95%',
+                    
                 },
                 backgroundColor: {
                     fill: 'transparent'
