@@ -16,7 +16,7 @@
                 title: 'QUANTIDADE DE ACIONAMENTOS DO DIA',
                 colors: ['0f4262'],
                 chartArea: {
-                    
+
                     width: '100%',
                     height: '70%'
                 },
@@ -28,7 +28,7 @@
                         fontSize: 10,
                     }
                 },
-                
+
 
             };
 
@@ -64,7 +64,7 @@
                 title: 'QUANTIDADE DE LIGAÇÕES DO DIA',
                 colors: ['111e29'],
                 chartArea: {
-                    
+
                     width: '100%',
                     height: '70%'
                 },
@@ -76,7 +76,7 @@
                 backgroundColor: {
                     fill: 'transparent'
                 },
-                
+
             };
 
             var view = new google.visualization.DataView(data);
@@ -117,6 +117,16 @@
                 <form action="{{ route('rel.detalhado') }}" method="post">
                     @csrf
                     <div class="row  d-flex justify-content-center">
+                        <div class="col-md-3">
+                            <select class="form-control " name="carteira">
+                                @foreach ($carteiras as $c)
+                                    <option value="{{ $c->empresa_id }}"
+                                        {{ isset($carteira) && $carteira == $c->empresa_id ? 'selected' : '' }}>
+                                        {{ $c->nome_empresa }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="col-md-3">
                             <select class="form-control " name="data">
                                 @foreach ($dataArray as $d)

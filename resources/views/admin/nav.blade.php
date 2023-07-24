@@ -20,7 +20,6 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('relatorios/def') ? 'active' :'' }}" href="{{route('rel.def')}}">Defasagem<span class="sr-only"></span></a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('relatorios/mov') ? 'active' :'' }}" href="{{route('rel.mov')}}">Movimentações<span class="sr-only"></span></a>
                 </li>
@@ -36,7 +35,7 @@
         </div>
         <div class="my-2 my-lg-0">
             <ul class="navbar-nav mr-auto">
-                <li class="nac-item">
+                <li class="nav-item">
                     <a class="nav-link" onclick="document.querySelector('form.logout').submit();">Sair</a>
                     <form action="{{route('logout')}}" class="logout" method="POST" style="display: none">
                         @csrf

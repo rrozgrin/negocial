@@ -11,11 +11,11 @@ class MovimentacoesController extends Controller
     public function index()
     {
         if (empty($_POST)) {
-
             $data = DB::table('acionamentos')->max('data');
         } else {
             $data = $_POST['data'];
         }
+
 
         $dataArray = DB::select(
             "SELECT DISTINCT(`data`) AS 'data'
@@ -57,8 +57,16 @@ class MovimentacoesController extends Controller
 
     public function detalhado()
     {
+        $carteiras = DB::table('clientes')
+            ->join("empresas as e", function ($join) {
+                $join->on("e.id", "=", "empresa_id");
+            })
+            ->select('empresa_id', 'e.nome_empresa')
+            ->distinct()
+            ->get();
 
         if (empty($_POST)) {
+            $carteira = $carteiras[0]->empresa_id;
             $data = DB::table('acionamentos')->max('data');
             $negociador = 2023;
             $dataLigacoes = DB::table('ligacoes')->max('data');
@@ -78,12 +86,13 @@ class MovimentacoesController extends Controller
                 })
                 ->select(DB::raw('distinct(a.hora) as hora'), "c.nome AS cliente", "a.acionamento AS ocorrencia", "n.nome AS negociador")
                 ->where("a.data", "=", $data)
+                // ->where("c.empresa_id", "=", $carteiras)
                 ->where("a.user_id", "like", '%')
                 ->orderBy('negociador', 'ASC')
                 ->orderBy('hora', 'ASC')
                 ->get();
         } else {
-
+            $carteira = $_POST['carteira'];
             $data = $_POST['data'];
 
             if ($_POST['negociador'] == 2023) {
@@ -98,6 +107,7 @@ class MovimentacoesController extends Controller
                     })
                     ->select(DB::raw('distinct(a.hora) as hora'), "c.nome AS cliente", "a.acionamento AS ocorrencia", "n.nome AS negociador")
                     ->where("a.data", "=", $data)
+                    // ->where("c.empresa_id", "=", $carteiras)
                     ->orderBy('negociador', 'ASC')
                     ->orderBy('hora', 'ASC')
                     ->get();
@@ -121,7 +131,7 @@ class MovimentacoesController extends Controller
                 dd($acionamentos);
             }
 
-            
+
             $ligacoes = DB::table("ligacoes AS l")
                 ->select("l.negociador AS negociador", "l.qtd_atv AS ligacoes")
                 ->where("l.data", "=", $data)
@@ -168,7 +178,7 @@ class MovimentacoesController extends Controller
         }
         //--dados gráfico acionamentos
 
-        return view('relatorios.movimentacoes.detalhado', compact('acionamentos', 'negociador', 'data', 'negociadorArray', 'dataArray'))
+        return view('relatorios.movimentacoes.detalhado', compact('acionamentos', 'negociador', 'carteiras', 'data', 'negociadorArray', 'dataArray'))
             ->with('pornegociadorData', json_encode($pornegociadorData))
             ->with('ligacoes', json_encode($liga));
     }

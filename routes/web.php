@@ -36,20 +36,19 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/mov/detalhado', [MovimentacoesController::class, 'detalhado'])->name('detalhado');
         Route::post('/mov/detalhado', [MovimentacoesController::class, 'detalhado'])->name('detalhado');
     });
-});
 
+    Route::get('/importadores', [ImportadoresController::class, 'index'])->name('importadores');
+    Route::post('/import-clientes', [ClienteController::class, 'import']);
+    Route::post('/import-acionamentos', [AcionamentoController::class, 'import']);
+    Route::post('/import-ligacoes', [LigacoesController::class, 'import']);
 
-Route::get('/importadores', [ImportadoresController::class, 'index'])->name('importadores');
-Route::post('/import-clientes', [ClienteController::class, 'import']);
-Route::post('/import-acionamentos', [AcionamentoController::class, 'import']);
-Route::post('/import-ligacoes', [LigacoesController::class, 'import']);
+    Route::prefix('/admin')->name('admin.')->group(function () {
+        Route::get('admin', function () {
+            return view('admin.admin');
+        })->name('admin');
 
-Route::prefix('/admin')->name('admin.')->group(function () {
-    Route::get('admin', function () {
-        return view('admin.admin');
-    })->name('admin');
-
-    Route::resource('users', UserController::class);
+        Route::resource('users', UserController::class);
+    });
 });
 
 Auth::routes();

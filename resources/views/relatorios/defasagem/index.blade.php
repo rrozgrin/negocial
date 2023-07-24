@@ -76,9 +76,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <select class="form-control " name="negociador">
-
-
+            <select class="form-control " name="carteira">
                 @foreach ($carteiras as $c)
                     <option value="{{ $c->empresa_id }}"
                         {{ isset($carteira) && $carteira == $c->empresa_id ? 'selected' : '' }}>
